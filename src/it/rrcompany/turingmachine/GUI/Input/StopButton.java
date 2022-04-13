@@ -1,31 +1,30 @@
 package it.rrcompany.turingmachine.GUI.Input;
 
-import it.rrcompany.turingmachine.GUI.Code.CodePanel;
 import it.rrcompany.turingmachine.GUI.MainFrame;
 import it.rrcompany.turingmachine.GUI.TuringComponent;
 
 import javax.swing.*;
 import java.awt.*;
 
-public class InputField extends JTextField implements TuringComponent {
+public class StopButton extends JButton implements TuringComponent {
 
     private static InputPanel parentPanel;
-    public final static float scaleWidth = (float) 0.7;
+    public final static float scaleWidth = (float) 0.7/3;
     public final static float scaleHeight = (float) 0.09;
-    public final static float locHeight = (float) 0.3;
 
-    public InputField(InputPanel parentPanel) {
-        InputField.parentPanel = parentPanel;
+    public StopButton(InputPanel parentPanel) {
+        StopButton.parentPanel = parentPanel;
 
         this.setFocusable(true);
         this.setLayout(null);
-        this.setBackground(Color.WHITE);
+        this.setBackground(Color.PINK);
 
         parentPanel.add(this);
         this.setVisible(true);
 
-        this.resize();
+        this.setText("Stop");
 
+        this.resize();
     }
 
     @Override
@@ -37,15 +36,15 @@ public class InputField extends JTextField implements TuringComponent {
     }
 
     public int getPosX() {
-        return (int)(parentPanel.getWidth()*((1-scaleWidth)/2));
+        return (int)(parentPanel.getWidth()*((1-InputField.scaleWidth)/2))+getWidth();
     }
 
     public int getPosY() {
-        return (int)(parentPanel.getHeight()*(locHeight));
+        return (int)(parentPanel.getHeight()*(InputField.locHeight+InputField.scaleHeight));
     }
 
     public int getWidth() {
-        return (int)(parentPanel.getWidth()*scaleWidth);
+        return (int)(parentPanel.getWidth()*(scaleWidth));
     }
 
     public int getHeight() {
@@ -53,4 +52,3 @@ public class InputField extends JTextField implements TuringComponent {
     }
 
 }
-

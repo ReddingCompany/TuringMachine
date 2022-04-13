@@ -1,8 +1,8 @@
 package it.rrcompany.turingmachine.GUI;
 
+import com.sun.tools.javac.Main;
 import it.rrcompany.turingmachine.GUI.Code.CodePanel;
-import it.rrcompany.turingmachine.GUI.Input.InputField;
-import it.rrcompany.turingmachine.GUI.Input.InputPanel;
+import it.rrcompany.turingmachine.GUI.Input.*;
 import it.rrcompany.turingmachine.GUI.Output.OutputPanel;
 import it.rrcompany.turingmachine.Utils;
 
@@ -16,7 +16,7 @@ public class MainFrame {
 
     public static final String TITLE = "Turing Machine";
     public static final JFrame mainFrame = new JFrame(TITLE);
-    private static final HashMap<String, JComponent> components = new HashMap<>();
+    private static final HashMap<String, TuringComponent> components = new HashMap<>();
 
     private static final float MIN_WIDTH_SCALE = (float) 0.5;
     private static final float MIN_HEIGHT_SCALE = (float) 0.5;
@@ -47,33 +47,33 @@ public class MainFrame {
         mainFrame.dispose();
     }
 
-    public static JComponent getComponent(String name) {
+    public static TuringComponent getComponent(String name) {
         return components.get(name.toUpperCase());
     }
 
 
     private void loadComponents() {
-        CodePanel codePanel = new CodePanel(mainFrame);
+        CodePanel codePanel = new CodePanel();
         components.put("CODE_PANEL", codePanel);
-        InputPanel inputPanel = new InputPanel(mainFrame);
+        InputPanel inputPanel = new InputPanel();
         components.put("INPUT_PANEL", inputPanel);
-        OutputPanel outputPanel = new OutputPanel(mainFrame);
+        OutputPanel outputPanel = new OutputPanel();
         components.put("OUTPUT_PANEL", outputPanel);
         InputField inputField = new InputField(inputPanel);
         components.put("INPUT_FIELD", inputField);
+        StartButton startButton = new StartButton(inputPanel);
+        components.put("START_BUTTON", startButton);
+        StopButton stopButton = new StopButton(inputPanel);
+        components.put("STOP_BUTTON", stopButton);
+        SpeedSelector speedSelector = new SpeedSelector(inputPanel);
+        components.put("SPEED_SELECTOR", speedSelector);
 
         mainFrame.addComponentListener(new ComponentAdapter() {
             @Override
             public void componentResized(ComponentEvent e) {
-                for (JComponent component : components.values())
-                    if (component instanceof CodePanel)
-                        ((CodePanel) component).resize();
-                    else if (component instanceof InputPanel)
-                        ((InputPanel) component).resize();
-                    else if (component instanceof OutputPanel)
-                        ((OutputPanel) component).resize();
-                    else if (component instanceof InputField)
-                        ((InputField) component).resize();
+                for (TuringComponent component : MainFrame.components.values()) {
+                    component.resize();
+                }
             }
         });
 

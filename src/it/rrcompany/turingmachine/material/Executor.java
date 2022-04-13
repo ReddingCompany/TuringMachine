@@ -14,14 +14,14 @@ public class Executor extends Tape implements Interpreter {
 
     private void load() {
 
-        for (String instrunction : input) {
+        for (String instruction : input) {
 
-            if (!(instrunction.charAt(0) == '(' && instrunction.charAt(instrunction.length()) == ')')) {
-                System.out.println("Errore parentesi mancanti in: " + instrunction);
+            if (!(instruction.charAt(0) == '(' && instruction.charAt(instruction.length()) == ')')) {
+                System.out.println("Errore parentesi mancanti in: " + instruction);
                 return;
             }
 
-            instrunction = instrunction.substring(0, instrunction.length()-1).substring(0,1);
+            instruction = instruction.substring(0, instruction.length()-1).substring(0,1);
 
             //REGEX \ con ,
 

@@ -8,6 +8,7 @@ public class Tape {
     private String state;
     private ArrayList<String> states;
     private ArrayList<Character> tape;
+    private float speed;
 
     public int getIndex() {
         return index;
@@ -39,5 +40,13 @@ public class Tape {
 
     public void setStates(ArrayList<String> states) {
         this.states = states;
+    }
+
+    public float getSpeed() {
+        return speed;
+    }
+
+    public void setSpeed(float speed) {
+        this.speed = speed;
     }
 }

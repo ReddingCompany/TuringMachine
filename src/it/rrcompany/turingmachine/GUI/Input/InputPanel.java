@@ -2,20 +2,21 @@ package it.rrcompany.turingmachine.GUI.Input;
 
 import it.rrcompany.turingmachine.GUI.Code.CodePanel;
 import it.rrcompany.turingmachine.GUI.MainFrame;
+import it.rrcompany.turingmachine.GUI.TuringComponent;
 
 import javax.swing.*;
 import java.awt.*;
+import java.time.temporal.TemporalUnit;
 
-public class InputPanel extends JPanel {
+public class InputPanel extends JPanel implements TuringComponent {
 
-    private static JFrame parentFrame;
+    private static final JFrame parentFrame = MainFrame.mainFrame;
     public final static float scaleHeight = (float) 0.4;
 
-    public InputPanel(JFrame parentFrame) {
-        InputPanel.parentFrame = parentFrame;
+    public InputPanel() {
 
-        this.setLocation(0, ((int)(MainFrame.getDefaultHeight()*(1-scaleHeight))));
-        this.setSize(parentFrame.getWidth()-((int)(parentFrame.getWidth()* CodePanel.scaleWidth)), (int)(parentFrame.getHeight()*(scaleHeight)));
+        this.resize();
+
         this.setFocusable(true);
         this.setLayout(null);
         this.setBackground(Color.GREEN);
@@ -24,9 +25,26 @@ public class InputPanel extends JPanel {
         this.setVisible(true);
     }
 
+    @Override
     public void resize() {
-        this.setLocation(0, ((int)(parentFrame.getHeight()*(1-scaleHeight))));
-        this.setSize(parentFrame.getWidth()-((int)(parentFrame.getWidth()*CodePanel.scaleWidth)), (int)(parentFrame.getHeight()*(scaleHeight)));
+        this.setLocation(this.getPosX(), this.getPosY());
+        this.setSize(this.getWidth(), this.getHeight());
+    }
+
+    public int getPosX() {
+        return 0;
+    }
+
+    public int getPosY() {
+        return (int)(parentFrame.getHeight()*(1-scaleHeight));
+    }
+
+    public int getWidth() {
+        return parentFrame.getWidth()-((int)(parentFrame.getWidth()*CodePanel.scaleWidth));
+    }
+
+    public int getHeight() {
+        return (int)(parentFrame.getHeight()*(scaleHeight));
     }
 
 
