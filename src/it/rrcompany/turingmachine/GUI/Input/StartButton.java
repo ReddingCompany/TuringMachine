@@ -2,9 +2,13 @@ package it.rrcompany.turingmachine.GUI.Input;
 
 import it.rrcompany.turingmachine.GUI.MainFrame;
 import it.rrcompany.turingmachine.GUI.TuringComponent;
+import it.rrcompany.turingmachine.TuringMachine;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.ComponentListener;
 
 public class StartButton extends JButton implements TuringComponent {
 
@@ -25,6 +29,15 @@ public class StartButton extends JButton implements TuringComponent {
         this.setText("Start");
 
         this.resize();
+
+        this.addActionListener(e -> {
+            if (TuringMachine.executor.isStarted())
+                return;
+
+            TuringMachine.executor.start(((InputField)MainFrame.getComponent("INPUT_FIELD")).getText());
+            new Thread(TuringMachine.executor).start();
+            TuringMachine.executor.setStarted(true);
+        });
     }
 
     @Override
@@ -50,5 +63,4 @@ public class StartButton extends JButton implements TuringComponent {
     public int getHeight() {
         return (int)(parentPanel.getHeight()*(scaleHeight));
     }
-
 }

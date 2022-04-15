@@ -1,8 +1,15 @@
 package it.rrcompany.turingmachine.material;
 
-import java.util.ArrayList;
+import it.rrcompany.turingmachine.GUI.MainFrame;
+import it.rrcompany.turingmachine.GUI.Output.TapeCell;
+import it.rrcompany.turingmachine.TuringMachine;
 
-public class Executor extends Tape implements Interpreter {
+import javax.swing.*;
+import java.awt.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+
+public class Executor extends Tape implements Interpreter, Runnable {
 
     private ArrayList<String> input;
     private String[]
@@ -11,24 +18,17 @@ public class Executor extends Tape implements Interpreter {
         outputState,
         outputChar,
         pointer;
+    private boolean started;
 
-    private void load() {
-
-        for (String instruction : input) {
-
-            if (!(instruction.charAt(0) == '(' && instruction.charAt(instruction.length()) == ')')) {
-                System.out.println("Errore parentesi mancanti in: " + instruction);
-                return;
-            }
-
-            instruction = instruction.substring(0, instruction.length()-1).substring(0,1);
-
-            //REGEX \ con ,
-
-        }
-
+    public Executor(long index, String state, ArrayList<String> states, HashMap<Long, Character> tape, float speed) {
+        super(index, state, states, tape, speed);
     }
 
+    public void start(String str) {
+        for (int i = 0; i<str.length(); i++)
+            this.getTape().put((long)i, str.charAt(i));
+        this.shift();
+    }
 
     public ArrayList<String> getInput() {
         return input;
@@ -65,5 +65,38 @@ public class Executor extends Tape implements Interpreter {
     }
     public void setPointer(String[] pointer) {
         this.pointer = pointer;
+    }
+    public boolean isStarted() {
+        return started;
+    }
+    public void setStarted(boolean started) {
+        this.started = started;
+    }
+
+    @Override
+    public void run() {
+        while(true) {
+            if (!this.started) {
+                this.setIndex(0);
+                break;
+            }
+
+            try {
+                Thread.sleep(this.speedConverter()/2);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+            TapeCell indexCell = (TapeCell) MainFrame.getComponent("TAPE_CELL_"+TuringMachine.startCell);
+            indexCell.getBackgroundPanel().setBorder(BorderFactory.createLineBorder(Color.RED));
+            try {
+                Thread.sleep(this.speedConverter()/2);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+            indexCell.getBackgroundPanel().setBorder(BorderFactory.createLineBorder(Color.BLACK));
+
+            this.moveRight();
+            this.shift();
+        }
     }
 }

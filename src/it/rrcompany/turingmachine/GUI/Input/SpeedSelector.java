@@ -6,6 +6,9 @@ import it.rrcompany.turingmachine.TuringMachine;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.ItemEvent;
 
 public class SpeedSelector extends JComboBox<String> implements TuringComponent {
 
@@ -38,6 +41,11 @@ public class SpeedSelector extends JComboBox<String> implements TuringComponent 
         TuringMachine.executor.setSpeed(5);
 
         this.resize();
+
+        this.addItemListener(e -> {
+            if (e.getStateChange() == ItemEvent.SELECTED)
+                TuringMachine.executor.setSpeed(Integer.parseInt(e.getItem().toString().replaceAll("Speed x", "")));
+        });
     }
 
     @Override

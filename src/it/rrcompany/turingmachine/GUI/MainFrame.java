@@ -4,6 +4,7 @@ import com.sun.tools.javac.Main;
 import it.rrcompany.turingmachine.GUI.Code.CodePanel;
 import it.rrcompany.turingmachine.GUI.Input.*;
 import it.rrcompany.turingmachine.GUI.Output.OutputPanel;
+import it.rrcompany.turingmachine.GUI.Output.TapeCell;
 import it.rrcompany.turingmachine.Utils;
 
 import javax.swing.*;
@@ -18,7 +19,7 @@ public class MainFrame {
     public static final JFrame mainFrame = new JFrame(TITLE);
     private static final HashMap<String, TuringComponent> components = new HashMap<>();
 
-    private static final float MIN_WIDTH_SCALE = (float) 0.5;
+    private static final float MIN_WIDTH_SCALE = (float) 0.55;
     private static final float MIN_HEIGHT_SCALE = (float) 0.5;
 
     public MainFrame() {
@@ -67,6 +68,10 @@ public class MainFrame {
         components.put("STOP_BUTTON", stopButton);
         SpeedSelector speedSelector = new SpeedSelector(inputPanel);
         components.put("SPEED_SELECTOR", speedSelector);
+        for (int i = 0; i<32; i++) {
+            TapeCell tapeCell = new TapeCell(outputPanel, i);
+            components.put("TAPE_CELL_"+i, tapeCell);
+        }
 
         mainFrame.addComponentListener(new ComponentAdapter() {
             @Override

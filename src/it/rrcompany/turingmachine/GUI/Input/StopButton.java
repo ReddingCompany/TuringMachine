@@ -2,6 +2,7 @@ package it.rrcompany.turingmachine.GUI.Input;
 
 import it.rrcompany.turingmachine.GUI.MainFrame;
 import it.rrcompany.turingmachine.GUI.TuringComponent;
+import it.rrcompany.turingmachine.TuringMachine;
 
 import javax.swing.*;
 import java.awt.*;
@@ -25,6 +26,13 @@ public class StopButton extends JButton implements TuringComponent {
         this.setText("Stop");
 
         this.resize();
+
+        this.addActionListener(e -> {
+            if (!TuringMachine.executor.isStarted())
+                return;
+
+            TuringMachine.executor.setStarted(false);
+        });
     }
 
     @Override
