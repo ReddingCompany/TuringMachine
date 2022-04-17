@@ -34,6 +34,8 @@ public class StartButton extends JButton implements TuringComponent {
             if (TuringMachine.executor.isStarted())
                 return;
 
+            TuringMachine.executor.setState("0");
+            TuringMachine.executor.getTape().clear();
             TuringMachine.executor.start(((InputField)MainFrame.getComponent("INPUT_FIELD")).getText());
             new Thread(TuringMachine.executor).start();
             TuringMachine.executor.setStarted(true);

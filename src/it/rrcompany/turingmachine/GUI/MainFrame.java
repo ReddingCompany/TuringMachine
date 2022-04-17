@@ -1,9 +1,11 @@
 package it.rrcompany.turingmachine.GUI;
 
 import com.sun.tools.javac.Main;
+import it.rrcompany.turingmachine.GUI.Code.CodeArea;
 import it.rrcompany.turingmachine.GUI.Code.CodePanel;
 import it.rrcompany.turingmachine.GUI.Input.*;
 import it.rrcompany.turingmachine.GUI.Output.OutputPanel;
+import it.rrcompany.turingmachine.GUI.Output.StateViewer;
 import it.rrcompany.turingmachine.GUI.Output.TapeCell;
 import it.rrcompany.turingmachine.Utils;
 
@@ -72,6 +74,11 @@ public class MainFrame {
             TapeCell tapeCell = new TapeCell(outputPanel, i);
             components.put("TAPE_CELL_"+i, tapeCell);
         }
+        StateViewer stateViewer = new StateViewer(outputPanel);
+        components.put("STATE_VIEWER", stateViewer);
+        stateViewer.setText("0");
+        CodeArea codeArea = new CodeArea(codePanel);
+        components.put("CODE_AREA", codeArea);
 
         mainFrame.addComponentListener(new ComponentAdapter() {
             @Override

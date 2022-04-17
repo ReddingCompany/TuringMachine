@@ -1,8 +1,8 @@
 package it.rrcompany.turingmachine.material;
 
 import it.rrcompany.turingmachine.GUI.MainFrame;
+import it.rrcompany.turingmachine.GUI.Output.StateViewer;
 import it.rrcompany.turingmachine.GUI.Output.TapeCell;
-import it.rrcompany.turingmachine.GUI.TuringComponent;
 import it.rrcompany.turingmachine.TuringMachine;
 
 import java.util.ArrayList;
@@ -68,6 +68,12 @@ public class Tape {
         if (!this.tape.containsKey(index))
             this.tape.put(index, null);
         return this.tape.get(index);
+    }
+
+    public void setTapeResult(long index, Character c) {
+        if (!this.tape.containsKey(index))
+            this.tape.put(index, c);
+        else this.tape.replace(index, c);
     }
 
     public void shift() {
